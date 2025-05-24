@@ -1,0 +1,11 @@
+{
+    "twitter": {
+        "consumer_key": "a52syDOdTuHC1uR3Ln3a7Dyt7",
+        "consumer_secret": "loCLSsxvsWtSRuIDOKsTBgPV25zjGBvMExE1f1VlUn9siPwFvV",
+        "access_token": "151300177-uPBDrK8zxQPXDacuGMGkIy1LL0scnZAA7PgbRCnx",
+        "access_token_secret": "AXw6Tw9PUu0NAtIXw77oR3jEk4xsGxFBs9ApcU1s2WXl0"
+    },
+    "twitter_v2": {
+        "bearer_token": "AAAAAAAAAAAAAAAAAAAAANfk1wEAAAAAa3gx5uCU67D1Qo40luYCj5KTQiY%3DTHiXXlfr9cb0wfedivUwLsszVP2Aux9lJbS17gFJ4RXo1dt2Dl"
+    }
+} 
