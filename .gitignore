@@ -22,7 +22,6 @@ wheels/
 
 # Virtual Environment
 venv/
-env/
 ENV/
 
 # IDE
@@ -33,10 +32,11 @@ ENV/
 
 # Logs
 *.log
+logs/
 
-# Local configuration
-config.json
-config/*.json
+# Config
+config/config.json
+!config/config.example.json
 
 # Generated files
 daily_brief_*.html 
