@@ -6,7 +6,6 @@ from news_collector import NewsCollector
 from brief_generator import BriefGenerator
 from publisher import Publisher
 import os
-from dotenv import load_dotenv
 
 # 配置日志
 logging.basicConfig(
@@ -23,9 +22,6 @@ logger = logging.getLogger(__name__)
 def generate_and_publish_brief():
     """生成并发布每日简报"""
     try:
-        # 加载环境变量
-        load_dotenv()
-        
         # 初始化组件
         collector = NewsCollector()
         generator = BriefGenerator()
@@ -60,12 +56,9 @@ def generate_and_publish_brief():
             f.write(brief_content)
         logger.info(f"简报已保存到 {brief_filename}")
         
-        # 获取订阅者列表
-        recipients = os.getenv('SUBSCRIBER_EMAILS', '').split(',')
-        
         # 发布简报
         logger.info("发布简报...")
-        results = publisher.publish_brief(brief_content, summary, recipients)
+        results = publisher.publish_brief(brief_content, summary)
         
         # 记录发布结果
         for channel, success in results.items():

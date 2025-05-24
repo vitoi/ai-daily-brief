@@ -1,58 +1,33 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import tweepy
 import logging
-from typing import List, Dict
+from typing import Dict
 import os
-from dotenv import load_dotenv
+import json
 
 class Publisher:
     def __init__(self):
-        load_dotenv()
         self.logger = logging.getLogger(__name__)
-        self._setup_email()
+        self._load_config()
         self._setup_twitter()
 
-    def _setup_email(self):
-        """设置邮件发送配置"""
-        self.smtp_server = os.getenv('SMTP_SERVER')
-        self.smtp_port = int(os.getenv('SMTP_PORT', '587'))
-        self.smtp_username = os.getenv('SMTP_USERNAME')
-        self.smtp_password = os.getenv('SMTP_PASSWORD')
-        self.sender_email = os.getenv('SENDER_EMAIL')
+    def _load_config(self):
+        """加载配置文件"""
+        try:
+            with open('config/config.json', 'r') as f:
+                self.config = json.load(f)
+        except Exception as e:
+            self.logger.error(f"加载配置文件时出错: {str(e)}")
+            self.config = {}
 
     def _setup_twitter(self):
         """设置Twitter API配置"""
+        twitter_config = self.config.get('twitter', {})
         self.twitter_client = tweepy.Client(
-            consumer_key=os.getenv('TWITTER_API_KEY'),
-            consumer_secret=os.getenv('TWITTER_API_SECRET'),
-            access_token=os.getenv('TWITTER_ACCESS_TOKEN'),
-            access_token_secret=os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
+            consumer_key=twitter_config.get('consumer_key'),
+            consumer_secret=twitter_config.get('consumer_secret'),
+            access_token=twitter_config.get('access_token'),
+            access_token_secret=twitter_config.get('access_token_secret')
         )
-
-    def send_email(self, recipients: List[str], subject: str, html_content: str) -> bool:
-        """发送邮件"""
-        try:
-            msg = MIMEMultipart('alternative')
-            msg['Subject'] = subject
-            msg['From'] = self.sender_email
-            msg['To'] = ', '.join(recipients)
-            
-            # 添加HTML内容
-            msg.attach(MIMEText(html_content, 'html'))
-            
-            # 连接SMTP服务器并发送
-            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
-                server.starttls()
-                server.login(self.smtp_username, self.smtp_password)
-                server.send_message(msg)
-            
-            self.logger.info(f"成功发送邮件到 {len(recipients)} 个收件人")
-            return True
-        except Exception as e:
-            self.logger.error(f"发送邮件时出错: {str(e)}")
-            return False
 
     def post_to_twitter(self, content: str) -> bool:
         """发布到Twitter"""
@@ -72,20 +47,11 @@ class Publisher:
             self.logger.error(f"发布到Twitter时出错: {str(e)}")
             return False
 
-    def publish_brief(self, brief_content: str, summary: str, recipients: List[str]) -> Dict[str, bool]:
-        """发布简报到所有渠道"""
+    def publish_brief(self, brief_content: str, summary: str) -> Dict[str, bool]:
+        """发布简报到Twitter"""
         results = {
-            'email': False,
             'twitter': False
         }
-        
-        # 发送邮件
-        if recipients:
-            results['email'] = self.send_email(
-                recipients=recipients,
-                subject=f"AI Daily Brief - {os.getenv('BRIEF_DATE', 'Today')}",
-                html_content=brief_content
-            )
         
         # 发布到Twitter
         results['twitter'] = self.post_to_twitter(summary)
