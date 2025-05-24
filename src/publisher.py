@@ -3,6 +3,7 @@ import logging
 from typing import Dict
 import os
 import json
+from datetime import datetime
 
 class Publisher:
     def __init__(self):
@@ -54,6 +55,7 @@ class Publisher:
         }
         
         # 发布到Twitter
-        results['twitter'] = self.post_to_twitter(summary)
+        twitter_content = f"🤖 AI Daily Brief - {datetime.now().strftime('%Y-%m-%d')}\n\n{summary}"
+        results['twitter'] = self.post_to_twitter(twitter_content)
         
         return results 
