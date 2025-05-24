@@ -33,14 +33,32 @@ class Publisher:
     def post_to_twitter(self, content: str) -> bool:
         """发布到Twitter"""
         try:
-            # 如果内容超过280个字符，需要分段发送
-            if len(content) > 280:
-                # 简单的分段逻辑，可以改进
-                parts = [content[i:i+270] for i in range(0, len(content), 270)]
-                for part in parts:
-                    self.twitter_client.create_tweet(text=part)
-            else:
-                self.twitter_client.create_tweet(text=content)
+            # 将内容分成多条推文
+            lines = content.split('\n')
+            tweets = []
+            current_tweet = []
+            current_length = 0
+            
+            for line in lines:
+                # 如果当前行加上当前推文长度超过270（留出空间给序号和链接），开始新的推文
+                if current_length + len(line) + 1 > 270:
+                    tweets.append('\n'.join(current_tweet))
+                    current_tweet = [line]
+                    current_length = len(line)
+                else:
+                    current_tweet.append(line)
+                    current_length += len(line) + 1  # +1 for newline
+            
+            # 添加最后一条推文
+            if current_tweet:
+                tweets.append('\n'.join(current_tweet))
+            
+            # 发布所有推文
+            for i, tweet in enumerate(tweets, 1):
+                # 添加序号和链接
+                if len(tweets) > 1:
+                    tweet = f"{i}/{len(tweets)} {tweet}"
+                self.twitter_client.create_tweet(text=tweet)
             
             self.logger.info("成功发布到Twitter")
             return True
