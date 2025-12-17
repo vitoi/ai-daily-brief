@@ -7,8 +7,11 @@
 - 自动抓取多个AI相关新闻源
 - 智能内容聚合和分类
 - 生成格式化的每日简报
-- 支持邮件订阅
-- 支持社交媒体发布（Twitter等）
+- 支持多渠道自动发布：
+  - 社交媒体（Twitter）
+  - 邮件推送
+  - GitHub Pages静态站点
+- 个人使用友好，支持灵活配置
 
 ## 安装
 
@@ -28,10 +31,58 @@ pip install -r requirements.txt
 
 ## 使用方法
 
-1. 配置新闻源和发布渠道
-2. 运行主程序：
+### 快速开始
+1. 安装依赖：
+```bash
+pip install -r requirements.txt
+```
+
+2. 配置发布渠道（可选）：
+```bash
+python setup_publishing.py
+```
+
+3. 运行主程序：
 ```bash
 python src/main.py
+```
+
+### 个人使用配置
+
+#### 邮件推送（推荐）
+每天自动发送简报到你的邮箱：
+```bash
+python setup_publishing.py  # 选择选项2
+```
+
+#### GitHub Pages站点
+创建个人简报归档站点：
+```bash
+python setup_publishing.py  # 选择选项3
+```
+
+#### Twitter发布
+分享简报到社交媒体：
+```bash
+python setup_publishing.py  # 选择选项1
+```
+
+#### 本地归档服务器
+启动本地Web服务器查看历史简报：
+```bash
+python local_server.py [端口号]
+# 例如：python local_server.py 8080
+# 然后访问: http://localhost:8080
+```
+
+### 定时运行
+使用crontab设置每日自动运行：
+```bash
+# 编辑crontab
+crontab -e
+
+# 添加每日早上8点运行
+0 8 * * * cd /path/to/ai-daily-brief && /usr/bin/python3 src/main.py >> logs/cron.log 2>&1
 ```
 
 ## 配置说明
@@ -41,6 +92,44 @@ python src/main.py
 - 邮件模板
 - 社交媒体API密钥
 - 发布计划
+
+### 发布渠道配置
+
+#### Twitter发布
+```json
+{
+  "twitter": {
+    "consumer_key": "your_consumer_key",
+    "consumer_secret": "your_consumer_secret",
+    "access_token": "your_access_token",
+    "access_token_secret": "your_access_token_secret"
+  }
+}
+```
+
+#### 邮件发布
+```json
+{
+  "email": {
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "sender_email": "your_email@gmail.com",
+    "sender_password": "your_app_password",
+    "recipient_email": "recipient@example.com"
+  }
+}
+```
+
+#### GitHub Pages发布
+```json
+{
+  "github_pages": {
+    "repo_url": "https://github.com/username/ai-daily-brief-pages.git",
+    "branch": "gh-pages",
+    "local_repo_path": "github_pages_repo"
+  }
+}
+```
 
 ## 合规性
 

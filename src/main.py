@@ -58,7 +58,7 @@ def generate_and_publish_brief():
         
         # 发布简报
         logger.info("发布简报...")
-        results = publisher.publish_brief(brief_content, summary)
+        results = publisher.publish_brief(brief_content, summary, brief_filename)
         
         # 记录发布结果
         for channel, success in results.items():

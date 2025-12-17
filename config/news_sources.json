@@ -1,0 +1,54 @@
+{
+    "sources": [
+        {
+            "name": "AI News",
+            "url": "https://www.artificialintelligence-news.com/feed/",
+            "type": "rss"
+        },
+        {
+            "name": "MIT Technology Review",
+            "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+            "type": "rss"
+        },
+        {
+            "name": "VentureBeat AI",
+            "url": "https://venturebeat.com/category/ai/feed/",
+            "type": "rss"
+        },
+        {
+            "name": "The Verge AI",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/rss/index.xml",
+            "type": "rss"
+        },
+        {
+            "name": "Wired AI",
+            "url": "https://www.wired.com/tag/artificial-intelligence/feed/",
+            "type": "rss"
+        },
+        {
+            "name": "ZDNet AI",
+            "url": "https://www.zdnet.com/news/rss.xml",
+            "type": "rss"
+        },
+        {
+            "name": "TechCrunch AI",
+            "url": "https://techcrunch.com/tag/artificial-intelligence/feed/",
+            "type": "rss"
+        },
+        {
+            "name": "ArXiv AI",
+            "url": "http://export.arxiv.org/rss/cs.AI",
+            "type": "rss"
+        },
+        {
+            "name": "Synced",
+            "url": "https://syncedreview.com/feed/",
+            "type": "rss"
+        },
+        {
+            "name": "AI Business",
+            "url": "https://aibusiness.com/feed/",
+            "type": "rss"
+        }
+    ]
+} 
