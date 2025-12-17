@@ -29,6 +29,10 @@ pip install -r requirements.txt
 3. 配置环境变量：
 复制 `.env.example` 到 `.env` 并填写必要的配置信息。
 
+## 📚 完整文档
+
+📖 **[查看完整项目文档](docs/README.md)** - 包含详细的使用指南、API文档、开发规范等
+
 ## 使用方法
 
 ### 快速开始
@@ -83,6 +87,12 @@ crontab -e
 
 # 添加每日早上8点运行
 0 8 * * * cd /path/to/ai-daily-brief && /usr/bin/python3 src/main.py >> logs/cron.log 2>&1
+```
+
+### 代码同步
+快速同步代码更改到GitHub：
+```bash
+python sync_to_github.py
 ```
 
 ## 配置说明
