@@ -4,5 +4,17 @@
         "consumer_secret": "your_consumer_secret_here",
         "access_token": "your_access_token_here",
         "access_token_secret": "your_access_token_secret_here"
+    },
+    "email": {
+        "smtp_server": "smtp.gmail.com",
+        "smtp_port": 587,
+        "sender_email": "your_email@gmail.com",
+        "sender_password": "your_app_password",
+        "recipient_email": "recipient@example.com"
+    },
+    "github_pages": {
+        "repo_url": "https://github.com/username/ai-daily-brief-pages.git",
+        "branch": "gh-pages",
+        "local_repo_path": "github_pages_repo"
     }
 } 
